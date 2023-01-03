@@ -38,11 +38,17 @@
  * maxrepeat=3 en fazla 3 arka arka aynı karakter
  * usercheck=0 şifre kullanıcı adını içeriyor mu diye kontrol
  * difok=7 yeni şifre eski şifreden minimum 7 karakter farklı olmalı
- * enforce_for_root root kullanıcıları için de aynı şeylerin geçerli olduğunu belirtir Evaluating adında bir grup oluştur, bu gruba oluşturduğun yeni kullanıcı ata ve kontrol et.
- sudo groupadd evaluating
- sudo adduser evaluating_user
- getent group evaluating şifre kurallarının avantajları
- bir şifreye büyük, küçük harf, rakam, özel karakterler eklemek o şifrenin bulunmasını zorlaştırır. hostname'in <ogrenci ismi>42 formatına uygun olup olmadığını kontrol et
+ * enforce_for_root root kullanıcıları için de aynı şeylerin geçerli olduğunu belirtir 
+ 
+ Evaluating adında bir grup oluştur, bu gruba oluşturduğun yeni kullanıcı ata ve kontrol et.
+ * sudo groupadd evaluating
+ * sudo adduser evaluating_user
+ * getent group evaluating 
+ 
+ şifre kurallarının avantajları
+ * bir şifreye büyük, küçük harf, rakam, özel karakterler eklemek o şifrenin bulunmasını zorlaştırır. 
+ 
+ hostname'in <ogrenci ismi>42 formatına uygun olup olmadığını kontrol et
  
  hostnamectl hostnameyi degistir ve reboot at
  * hostnamectl set-hostname new_hostname
@@ -50,7 +56,8 @@
  sudo reboot sudo nun yüklü olup olmadığını kontrol etme
  * sudo —version 
  
- sudo'nun amacı sudoers gibi alt pluginlerle şifre süresini belirleme şifre gereksinimi belirleme gibi şeyleri ayarlamak ve bazı önemli komutları sadece root yetkisine sahip kişilerin kullanabilmesi. /var/log/sudo klasörünün olup olmadığına bak ve içinde en azında bir dosyanın olduğunu teyit et
+ sudo'nun amacı sudoers gibi alt pluginlerle şifre süresini belirleme şifre gereksinimi belirleme gibi şeyleri ayarlamak ve bazı önemli komutları sadece root yetkisine sahip kişilerin kullanabilmesi. 
+ /var/log/sudo klasörünün olup olmadığına bak ve içinde en azında bir dosyanın olduğunu teyit et
  
  sudo visudo UFW çalışıyor mu kontrol et
  * sudo ufw status 
