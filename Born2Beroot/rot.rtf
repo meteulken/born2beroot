@@ -1,0 +1,25 @@
+{\rtf1\ansi\ansicpg1254\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww21460\viewh8640\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 uname -a			//uname sistem bilgisi -a hepsi\
+grep "^physical id" /proc/cpuinfo | sort | uniq | wc -l			//sort alfabeti s\uc0\u305 ralama, uniq tekrar eden sat\u305 rlar\u305  kald\u305 rma\
+grep "^processor" /proc/cpuinfo | wc -l				//\
+free -m | awk '$1 == "Mem:" \{print $2\}'				// free bellek miktar\uc0\u305  -m mb cinsinden,  $1 1.sat\u305 r print2 2. S\'fct\'fcn. Mb olarak eri\u351 ebilir ram\
+free -m | awk '$1 == "Mem:" \{print $3\}'			// kullan\uc0\u305 m oran\u305 \
+free | awk '$1 == "Mem:" \{printf("%.2f"), $3/$2*100\}'			//3. B\'f6l\'fc 2. \'c7arp\uc0\u305  100, \
+df -Bg | grep '^/dev/' | grep -v '/boot$' | awk '\{ft += $2\} END \{print ft\}\'92        //df disk kullan\uc0\u305 m alan\u305 , bg blog-size GB \u351 eklinde, dev ile ba\u351 layanlar olmadan, boot ile bitenler olmadan, 2. S\'fct\'fcn\'fc topla\
+df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '\{ut += $3\} END \{print ut\}\'92    //df disk kullan\uc0\u305 m alan\u305 , bm blog-size MB \u351 eklinde, dev ile ba\u351 layanlar olmadan, boot ile bitenler olmadan, 3. S\'fct\'fcn\'fc topla\
+df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '\{ut += $3\} \{ft+= $2\} END \{printf("%d"), ut/ft*100\}\'92         //ut ve ft y\'fczdesini al\uc0\u305 r\
+top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '\{printf("%.1f%%"), $1 + $3\}\'92           //top i\uc0\u351 lemci g\'f6revleri,  bn s\u305 n\u305 rlama (1 kere \'e7al\u305 \u351 \u305 r g\'fcncellenmez),     ,xargs bo\u351 luklar\u305  hizalar, \
+who -b | awk '$1 == "system" \{print $3 " " $4\}'				//who giri\uc0\u351 ler, -b son boot giri\u351 i\
+lsblk | grep "lvm" | wc -l				// lvm grup say\uc0\u305 s\u305 \
+if [ $lvmt -eq 0 ]; then echo no; else echo yes; fi				//lvmt say\uc0\u305 s\u305  0 dan farkl\u305 ysa yes de\u287 ilse no yaz fi ile sonland\u305 r\u305 r.\
+cat /proc/net/sockstat\{,6\} | awk '$1 == "TCP:" \{print $3\}'		//\
+users | wc -w				// users sunucuyu kullanan kullan\uc0\u305 c\u305  say\u305 s\u305  /, -w kelime say\u305 s\u305 .\
+hostname -I				// sunucu IPv+ adresi\
+ip link show | awk '$1 == "link/ether" \{print $2\}'				// Mac \uc0\u304 P is gustier ether den sonrakini al.\
+journalctl _COMM=sudo -q | grep COMMAND | wc -l			// journal = g\'fcnl\'fck, -q hata loglar\uc0\u305  vs siler, }
