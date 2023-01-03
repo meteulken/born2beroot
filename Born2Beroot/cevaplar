@@ -1,0 +1,137 @@
+ Sanal makina nasıl çalışır ?
+ bir sanal makina bilgisayardan ayrılan ram-depolama alanı gibi değerlerı alır ve bunu sadece o sanal makinada kullanılanıma uygun olacak şekilde ayarlar. Seçtiğin işletim sistemi nedir ?
+ 
+ Debian Debian ile CentOS arasındaki farklar nelerdir ?
+ * CentOS rpm paket yöneticisine sahiptir Debian ise apt-get paket yöneticisine sahiptir.
+ * CentOS repoları daha az sıklıkla güncellenirken Debian repoları daha sık bir şekilde güncellenir
+ * CentOS Red hat Linux tarafından desteklenir ve daha kararlı bir dağıtımdır bunun sebebi paket güncellemeleri daha az sıklıkla gerçekleşir.
+ * C: Kurulumu ve yapılandırması CentOS'tan daha kolaydır 
+ 
+ Sanal makinelerin amacı nedir ?
+ * tek bir fiziksel bilgisayarda çalışarak çoklu işletim sistemi kullanma olanağı sağlar. Böylece fiziksel alan, zaman, yönetim, donanım ve yazılım masraflarından tasarruf sağlar. 
+ 
+ aptitude ve apt arasındaki farklar ve APParmor nedir ?
+ * Aptitude APT'ın kullanıcı arabirimidir. Yazılım paketlerini listelemeye, onları seçip kurmaya ve kaldırmaya yarar. APT debian tabanlı sistemlerin paket yöneticisidir APT ile yazılım kurma, yazılım kaldırma, sistemi güncelleme, çekirdeği derleme gibi işlemleri terminal üzerinden gerçekleştirebilirsiniz.
+ * AppArmor, sistem yöneticisinin programların yeteneklerini program başına farklı tanımlarla kısıtlamasına olanak tanıyan bir Linux çekirdek güvenlik modülüdür.AppArmor, savunmasız süreçleri kilitler, bu süreçlerdeki güvenlik açıklarının neden olabileceği hasarı sınırlar. A: Aptitude, üst düzey bir paket yöneticisidir, APT ise başkaları tarafından kullanılabilen daha düşük düzeyli bir paket yöneticisidir. 
+ 
+ UFW service başlatılmış mı diye kontrol et
+ * sudo ufw status 
+ 
+ SSH service başlatılmış mı diye kontrol et
+ * sudo systemctl status ssh 
+ 
+ Sistemin Debian mı CentOS'mu olup olmadığını kontrol et
+ * hostnamectl 
+ 
+ kullanıcı sudo ya ekli mi diye kontrol et
+ * getent group sudo 
+ 
+ Öncelikle yeni bir kullanıcı oluştur, şifreyi kurallara uygun olarak koy, bu kuralları nasıl oluşturduğunu açıkla.
+ * Sudo adduser new_username
+ * sudo vim /etc/pam.d/common-password 
+ 
+ * minlen=10 şifrenin minimum uzunluğu
+ * retry=3 maximum 3 deneme hakki
+ * lcredit=-1 en az 1 küçük harf
+ * ucredit=-1 en az 1 büyük harf
+ * dcredit=-1 en az 1 sayı
+ * maxrepeat=3 en fazla 3 arka arka aynı karakter
+ * usercheck=0 şifre kullanıcı adını içeriyor mu diye kontrol
+ * difok=7 yeni şifre eski şifreden minimum 7 karakter farklı olmalı
+ * enforce_for_root root kullanıcıları için de aynı şeylerin geçerli olduğunu belirtir Evaluating adında bir grup oluştur, bu gruba oluşturduğun yeni kullanıcı ata ve kontrol et.
+ sudo groupadd evaluating
+ sudo adduser evaluating_user
+ getent group evaluating şifre kurallarının avantajları
+ bir şifreye büyük, küçük harf, rakam, özel karakterler eklemek o şifrenin bulunmasını zorlaştırır. hostname'in <ogrenci ismi>42 formatına uygun olup olmadığını kontrol et
+ 
+ hostnamectl hostnameyi degistir ve reboot at
+ * hostnamectl set-hostname new_hostname
+ 
+ sudo reboot sudo nun yüklü olup olmadığını kontrol etme
+ * sudo —version 
+ 
+ sudo'nun amacı sudoers gibi alt pluginlerle şifre süresini belirleme şifre gereksinimi belirleme gibi şeyleri ayarlamak ve bazı önemli komutları sadece root yetkisine sahip kişilerin kullanabilmesi. /var/log/sudo klasörünün olup olmadığına bak ve içinde en azında bir dosyanın olduğunu teyit et
+ 
+ sudo visudo UFW çalışıyor mu kontrol et
+ * sudo ufw status 
+ 
+ UFW nin ne olduğunu açıkla
+ * Karmaşık Güvenlik Duvarı, kullanımı kolay olacak şekilde tasarlanmış bir netfilter güvenlik duvarını yönetmek için kullanılan bir programdır. UFW'nin aktif kurallarını listele, 4242 portu listede olmalı
+ 
+ sudo ufw status 8080 portu için yeni bir kural ekle, kontrol et yeni kuralı sil
+ * sudo ufw allow 8080
+ 
+ * sudo ufw status numbered
+ * sudo ufw delete number 
+ 
+ basitçe SSH nedir anlat
+ * SSH, veya Secure Shell, kullanıcılara sunucularını internet üzerinden kontrol etmesini ve düzenlemesini sağlayan uzak yönetim protokolüdür. 
+ 
+ SSH servisinin sadece 4242 portunu kullandığından emin ol sudo grep Port /etc/ssh/sshd_config Yeni oluşturulan kullanıcı ile SSH kullanarak bağlantı kurunuz
+ * ssh your_username@127.0.0.1 -p 4242 crontab'ı kontrol et ve ne olduğunu açıkla
+ * sudo crontab -u root -e
+ 
+ **monitoring.sh dosyasını kontrol et
+ ** uname: belirli sistem bilgilerini yazdırır -a: all- bütün bilgileri yazdırır sort: Tekst dosyalarının satırlarını sınıflandırır wc (word count) komutu dosyada bulunan satır sayısını, kelime sayısını ve karakter sayısını çıktı olarak verir. -l = line Uniq :tekrarlanan satırları rapor et veya atla Free:Sistemdeki boş ve kullanılan bellek miktarını görüntüleme -m: megabytes Awk: desen tarama ve işleme dili Df: dosya sistemi disk alanı kullanımını rapor et
+ Her DOSYA'nın bulunduğu dosya sistemi veya varsayılan olarak tüm dosya sistemleri hakkındaki bilgileri gösterin. Bg: boyutları yazdırmadan önce SIZE'a göre ölçeklendirin. Xargs: standart girdiden komut satırları oluşturun ve yürütün Lsblk: blok cihazları listeler Journalctl: sistem içeriğini sorgular Top : linux görevlerini gösteriyor
+ 
+ [3:44 PM] --------- PROJECT OVERVİEW --------- 
+ 
+ -1 Sanal makine nasıl çalışır
+ -2 Seçtiğin işletim sistemi nedir
+ -3 Debian ile CentOS arasındaki basit farklar
+ -4 Sanal makinelerin amacı nedir
+ -5 CentOS'u seçtiysen SElinux ve DNF nedir
+ -6 Debianı seçtiysen aptitude ve apt arasındaki farklar ve APParmor nedir 
+ 
+ --------- SIMPLE SETUP --------- 
+ 
+ -1 UFW service başlatılmış mı diye kontrol et
+ -2 SSH service başlatılmış mı diye kontrol et
+ -3 Sistemin Debian mı CentOS'mu olup olmadığını kontrol et 
+ 
+ --------- USER --------- 
+ 
+ -1 user42 sudoya ekli mi diye kontrol et.
+ -2 Oncelikle yeni bir kullanıcı oluştur, şifreyi kurallara uygun olarak koy, bu kuralları nasıl oluşturduğunu açıkla.
+ -3 evaluating adında bir grup oluştur, bu gruba oluşturduğun yeni kullanıcı ata ve kontrol et.
+ -4 son olarak şifre kurallarının avantajlarını ve dezavantajlarını açıkla. 
+ 
+ --------- HOSTNAME AND PARTITIONS --------- 
+ 
+ -1 hostname'in <ogrenci ismi>42  formatına uygun olup olmadığını kontrol et
+ -2 hostnameyi degistir ve reboot at
+ -3 hostnameyi eski haline geri döndürebilirsin.
+ -4 partitonları listele
+ -5 partitonların pdfteki gibi olup olmadığını kontrol et. 
+ 
+ --------- SUDO --------- 
+ 
+ -1 "sudo" nun yüklü olup olmadığını kontrol et.
+ -2 sudo'nun amacını örneklendirerek anlat.
+ -3 /var/log/sudo klasörünün olup olmadığına bak ve içinde en azında bir dosyanın olduğunu teyit et
+ -4 sudo ile bir komut gerçekleştir ve /var/log/sudo'da ki dosyada değişim olup olmadığını teyit et 
+ 
+ --------- UFW --------- 
+ 
+ -1 UFW kurulmuş mu kontrol et
+ -2 çalışıyor mu kontrol et
+ -3 UFW nin ne olduğunu açıkla
+ -4 UFW'nin aktif kurallarını listele, 4242 portu listede olmalı
+ -5 8080 portu için yeni bir kural ekle, kontrol et.
+ -6 yeni eklenen kuralı sil 
+ 
+ --------- SSH --------- 
+ 
+ -1 SSH kurulmuş mu kontrol et
+ -2 çalışıyor mu kontrol et
+ -3 basitçe SSH nedir anlat
+ -4 SSH servisinin sadece 4242 portunu kullandığından emin ol @#$%^^&&*
+ -5 Yeni oluşturulan kullanıcı ile SSH kullanarak bağlantı kurunuz. 
+ 
+ --------- SCRIPT MONITORING --------- 
+ 
+ -1 Script nasıl çalışıyor kod olarak göster
+ -2 cron nedir
+ -3 bu script her 10 dk'da bir nasıl çalışıyor
+ -4 bu scripti 1dk'da çalışmaya ayarla
