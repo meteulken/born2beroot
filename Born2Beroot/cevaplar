@@ -52,8 +52,9 @@
  
  hostnamectl hostnameyi degistir ve reboot at
  * hostnamectl set-hostname new_hostname
+ * sudo reboot 
  
- sudo reboot sudo nun yüklü olup olmadığını kontrol etme
+ sudo nun yüklü olup olmadığını kontrol etme
  * sudo —version 
  
  sudo'nun amacı sudoers gibi alt pluginlerle şifre süresini belirleme şifre gereksinimi belirleme gibi şeyleri ayarlamak ve bazı önemli komutları sadece root yetkisine sahip kişilerin kullanabilmesi. 
